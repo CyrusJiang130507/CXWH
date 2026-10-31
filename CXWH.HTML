@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>承希文化传媒 | 澳门</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    }
+
+    body {
+        background-color: #ffffff;
+        color: #111111;
+        line-height: 1.7;
+    }
+
+    :root {
+        --gold: #d4af37;
+        --gold-light: #f4e4a6;
+        --silver: #c0c0c0;
+        --silver-light: #e8e8e8;
+        --black: #111111;
+        --white: #ffffff;
+        --border: #dddddd;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 24px;
+    }
+
+    header {
+        position: relative;
+        text-align: center;
+        padding: 48px 0 32px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .user-status {
+        position: absolute;
+        right: 20px;
+        top: 24px;
+        color: #444;
+        font-size: 14px;
+    }
+
+    .user-status .vip-tag {
+        display: inline-block;
+        color: var(--gold);
+        border: 1px solid var(--gold);
+        padding: 4px 12px;
+        border-radius: 999px;
+        margin-left: 8px;
+        font-weight: bold;
+    }
+
+    header h1 {
+        color: var(--gold);
+        font-size: 2.4rem;
+        letter-spacing: 6px;
+    }
+
+    header p {
+        color: #666;
+        margin-top: 10px;
+    }
+
+    section {
+        margin: 40px 0;
+    }
+
+    h2 {
+        color: var(--gold);
+        margin-bottom: 18px;
+        border-left: 4px solid var(--gold);
+        padding-left: 12px;
+        font-size: 1.4rem;
+    }
+
+    .about,
+    .announce,
+    .support {
+        background: #fafafa;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 28px;
+    }
+
+    .announce-item {
+        padding: 12px 0;
+        border-bottom: 1px solid #eee;
+        color: #333;
+    }
+
+    .announce-item:last-child {
+        border-bottom: none;
+    }
+
+    .subscribe h2 {
+        text-align: center;
+        border-left: none;
+        padding-left: 0;
+        font-size: 1.8rem;
+    }
+
+    .plan-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+    }
+
+    .plan-card {
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 28px 20px;
+        text-align: center;
+        transition: 0.3s;
+    }
+
+    .plan-card:hover {
+        border-color: var(--gold);
+        transform: translateY(-4px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .plan-card.highlight {
+        border-color: var(--gold);
+    }
+
+    .plan-card .name {
+        color: var(--gold);
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .plan-card .price {
+        font-size: 1.7rem;
+        color: var(--black);
+        margin: 14px 0;
+        font-weight: bold;
+    }
+
+    .plan-card .desc {
+        color: #777;
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 22px;
+        background: var(--gold);
+        color: #000;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .btn:hover {
+        background: #b8942e;
+    }
+
+    .subscribe-tip {
+        text-align: center;
+        margin-top: 28px;
+        padding: 24px;
+        background: #fafafa;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+    }
+
+    .subscribe-tip p {
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .subscribe-tip a {
+        color: var(--gold);
+        font-weight: bold;
+    }
+
+    .support {
+        text-align: center;
+    }
+
+    .support a {
+        color: var(--gold);
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+
+    footer {
+        margin-top: 60px;
+        padding: 30px;
+        text-align: center;
+        color: #666;
+        border-top: 1px solid var(--border);
+        font-size: 0.9rem;
+    }
+
+    /* 弹窗 */
+    .modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        align-items: center;
+        justify-content: center;
+        z-index: 999;
+        padding: 20px;
+    }
+
+    .modal-box {
+        background: #fff;
+        border-radius: 16px;
+        padding: 32px;
+        width: 100%;
+        max-width: 520px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-box h3 {
+        color: var(--gold);
+        margin-bottom: 16px;
+    }
+
+    .modal-box input {
+        width: 100%;
+        padding: 14px;
+        background: #fafafa;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-size: 1rem;
+        margin: 12px 0 20px;
+        color: #111;
+    }
+
+    .modal-box .row {
+        display: flex;
+        gap: 12px;
+    }
+
+    .modal-box button {
+        flex: 1;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .btn-confirm {
+        background: var(--gold);
+        color: #000;
+    }
+
+    .btn-close {
+        background: #eee;
+        color: #333;
+    }
+
+    .msg {
+        margin-top: 14px;
+        font-weight: bold;
+    }
+
+    .success {
+        color: #2d7a2d;
+    }
+
+    .error {
+        color: #c0392b;
+    }
+
+    /* 会员卡 */
+    .vip-card {
+        margin-top: 24px;
+        border-radius: 16px;
+        padding: 30px;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .vip-card h4 {
+        font-size: 1rem;
+        opacity: 0.85;
+        margin-bottom: 10px;
+        letter-spacing: 2px;
+    }
+
+    .vip-card .level {
+        font-size: 2.4rem;
+        font-weight: bold;
+        margin-bottom: 14px;
+    }
+
+    .vip-card .info {
+        font-size: 0.95rem;
+        opacity: 0.9;
+    }
+
+    .vip-card.silver {
+        background: linear-gradient(135deg, #f1f1f1, #c9c9c9);
+        color: #333;
+        border: 1px solid #aaa;
+    }
+
+    .vip-card.gold {
+        background: linear-gradient(135deg, #ffe9a8, #d4af37, #b8942e);
+        color: #3a2a00;
+    }
+
+    .vip-card.white {
+        background: #ffffff;
+        color: #111;
+        border: 1px solid #ddd;
+    }
+
+    .vip-card.platinum {
+        background: linear-gradient(135deg, #ffffff 0%, #f4f4f4 40%, #eaeaea 100%);
+        color: #111;
+        border: 1px solid #ccc;
+    }
+
+    .vip-card.supreme {
+        background: linear-gradient(135deg, #fff6c2 0%, #ffd24d 25%, #d4af37 55%, #b8942e 80%, #fff6c2 100%);
+        background-size: 200% 200%;
+        animation: shine 4s ease infinite;
+        color: #3a2a00;
+    }
+
+    @keyframes shine {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .vip-card .logo {
+        position: absolute;
+        top: 20px;
+        right: 24px;
+        font-weight: bold;
+        color: inherit;
+        letter-spacing: 3px;
+        opacity: 0.75;
+    }
+
+    .save-card-btn {
+        margin-top: 16px;
+        width: 100%;
+    }
+
+    /* 订阅弹窗 */
+    .subscribe-modal{
+        display:none;
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,0.5);
+        align-items:center;
+        justify-content:center;
+        z-index:998;
+        padding:20px;
+    }
+    .subscribe-modal-box{
+        background:#fff;
+        border-radius:16px;
+        padding:32px;
+        width:100%;
+        max-width:500px;
+        text-align:center;
+    }
+    .subscribe-modal-box .url-text{
+        width:100%;
+        padding:12px;
+        border:1px solid var(--border);
+        border-radius:8px;
+        margin:12px 0 20px;
+        font-size:0.9rem;
+        color:#333;
+    }
+    .subscribe-modal-box .row{
+        display:flex;
+        gap:12px;
+    }
+
+    @media (max-width: 600px) {
+        header h1 {
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+        }
+
+        .user-status {
+            position: static;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .vip-card .level {
+            font-size: 2rem;
+        }
+    }
+</style>
+</head>
+
+<body>
+<div class="container">
+    <header>
+        <div class="user-status">
+            账号：访客
+            <span class="vip-tag" id="vipDisplay">暂无会员</span>
+        </div>
+
+        <h1>承希文化传媒</h1>
+        <p>CHENGXI CULTURE MEDIA · 澳门</p>
+        <p>2021年2月由蒋承希创立 | 以航空文化为特色主线</p>
+    </header>
+
+    <section class="about">
+        <h2>关于我们</h2>
+        <p>承希文化传媒由蒋承希于 2021 年 2 月在澳门创立，总部设于澳门。机构以航空文化为特色主线，设有航空、音乐、播客、游戏部门，另有新闻、编程、旅游三大独立事业部，深耕通用内容与技术开发，产出科普、音频、文创、数字产品等多元作品。</p>
+    </section>
+
+    <section class="announce">
+        <h2>公告栏</h2>
+        <div class="announce-item">【2026-10-31】会员订阅系统正式上线，欢迎选择合适的支持方案。</div>
+        <div class="announce-item">【提示】会员为支持项目发展的赞助订阅，非实体商品。付款完成后，请使用兑换码激活会员。</div>
+        <div class="announce-item">【更新】航空科普栏目持续更新中，敬请关注。</div>
+    </section>
+
+    <section class="subscribe">
+        <h2>会员订阅计划</h2>
+
+        <div class="plan-grid">
+            <div class="plan-card">
+                <div class="name">铂金会员</div>
+                <div class="price">¥5 / 月</div>
+                <div class="desc">基础支持，感谢陪伴</div>
+                <button class="btn" onclick="openSubscribeModal('https://afdian.net/')">订阅</button>
+            </div>
+
+            <div class="plan-card">
+                <div class="name">中国会员</div>
+                <div class="price">待定价</div>
+                <div class="desc">国内基础会员权益</div>
+                <button class="btn" onclick="openSubscribeModal('https://afdian.net/')">订阅</button>
+            </div>
+
+            <div class="plan-card">
+                <div class="name">中国精英会员</div>
+                <div class="price">¥10 / 月</div>
+                <div class="desc">国内精英专属权益</div>
+                <button class="btn" onclick="openSubscribeModal('https://afdian.net/')">订阅</button>
+            </div>
+
+            <div class="plan-card">
+                <div class="name">中国精英会员 · 年度</div>
+                <div class="price">待定价</div>
+                <div class="desc">中国精英年付方案</div>
+                <button class="btn" onclick="openSubscribeModal('https://afdian.net/')">订阅</button>
+            </div>
+
+            <div class="plan-card">
+                <div class="name">环球会员</div>
+                <div class="price">¥20 / 月</div>
+                <div class="desc">环球基础会员权益</div>
+                <button class="btn" onclick="openSubscribeModal('https://afdian.net/')">订阅</button>
+            </div>
+
+            <div class="plan-card highlight">
+                <div class="name">环球精英</div>
+                <div class="price">¥30 / 月</div>
+                <div class="desc">环球精英月付</div>
+                <button class="btn" onclick="openSubscribeModal('https://afdian.net/')">订阅</button>
+            </div>
+
+            <div class="plan-card highlight">
+                <div class="name">环球精英年卡</div>
+                <div class="price">¥300 / 年</div>
+                <div class="desc">环球精英年付，更划算</div>
+                <button class="btn" onclick="openSubscribeModal('https://afdian.net/')">订阅</button>
+            </div>
+
+            <div class="plan-card">
+                <div class="name">至尊会员</div>
+                <div class="price">¥9999.9 / 年</div>
+                <div class="desc">最高等级专属权益</div>
+                <button class="btn" onclick="openSubscribeModal('https://afdian.net/')">订阅</button>
+            </div>
+        </div>
+
+        <div class="subscribe-tip">
+            <p>付款完成后，请点击下方按钮输入兑换码激活会员。</p>
+            <button class="btn" onclick="openModal()">激活会员兑换码</button>
+            <p style="margin-top:12px;">订阅网址：<a href="https://afdian.net/" target="_blank">https://afdian.net/</a></p>
+        </div>
+    </section>
+
+    <section class="support">
+        <h2>爱发电支持通道</h2>
+        <p>也可以前往爱发电平台支持我们的创作</p>
+        <br>
+        <a href="https://afdian.net/" target="_blank">前往爱发电</a>
+    </section>
+
+    <footer>
+        <p>© 2021–2026 承希文化传媒 | 澳门</p>
+        <p>航空 · 音乐 · 播客 · 游戏 · 新闻 · 编程 · 旅游</p>
+    </footer>
+</div>
+
+<!-- 订阅弹窗 -->
+<div class="subscribe-modal" id="subscribeModal">
+    <div class="subscribe-modal-box">
+        <h3>复制爱发电订阅链接</h3>
+        <input class="url-text" id="subscribeUrlInput" readonly>
+        <div class="row">
+            <button class="btn btn-confirm" onclick="copyUrl()">复制链接</button>
+            <button class="btn btn-close" onclick="closeSubscribeModal()">关闭</button>
+        </div>
+    </div>
+</div>
+
+<!-- 兑换码弹窗 -->
+<div class="modal" id="codeModal">
+    <div class="modal-box">
+        <h3>您已完成付款，请输入兑换码激活会员</h3>
+        <input type="text" id="exchangeCode" placeholder="请输入兑换码" />
+
+        <div class="row">
+            <button class="btn-confirm" onclick="checkCode()">确认激活</button>
+            <button class="btn-close" onclick="closeModal()">关闭</button>
+        </div>
+
+        <div class="msg" id="msgBox"></div>
+
+        <!-- 会员卡结果区 -->
+        <div id="vipCardResult" style="display:none;"></div>
+    </div>
+</div>
+
+<script>
+    let currentSubscribeUrl = "";
+
+    function openSubscribeModal(url){
+        currentSubscribeUrl = url;
+        document.getElementById("subscribeUrlInput").value = url;
+        document.getElementById("subscribeModal").style.display = "flex";
+    }
+    function closeSubscribeModal(){
+        document.getElementById("subscribeModal").style.display = "none";
+    }
+
+    // 兼容复制函数
+    function copyUrl(){
+        const text = currentSubscribeUrl;
+        // 优先新版clipboard
+        if(navigator.clipboard && window.isSecureContext){
+            navigator.clipboard.writeText(text).then(()=>{
+                alert("✅ 链接已复制！");
+            }).catch(()=>{
+                fallbackCopy(text);
+            })
+        }else{
+            fallbackCopy(text);
+        }
+    }
+    // 降级方案（本地打开文件必走这个）
+    function fallbackCopy(text){
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'absolute';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        if(ok){
+            alert("✅ 链接已复制！");
+        }else{
+            alert("❌ 复制失败，请手动选中输入框里链接复制");
+        }
+    }
+
+    // 兑换码库
+    const codeList = {
+        "CX-PLATINUM": { name: "铂金会员", type: "platinum" },
+        "CX-CHINA": { name: "中国会员", type: "silver" },
+        "CX-CNELITE": { name: "中国精英会员", type: "gold" },
+        "CX-CNELITE-Y": { name: "中国精英会员年度", type: "gold" },
+        "CX-GLOBAL": { name: "环球会员", type: "silver" },
+        "CX-GLOELITE-M": { name: "环球精英", type: "gold" },
+        "CX-GLOELITE-Y": { name: "环球精英年卡", type: "gold" },
+        "CX-SUPREME": { name: "至尊会员", type: "supreme" }
+    };
+
+    function openModal() {
+        document.getElementById("codeModal").style.display = "flex";
+        document.getElementById("msgBox").innerText = "";
+        document.getElementById("exchangeCode").value = "";
+        document.getElementById("vipCardResult").style.display = "none";
+    }
+
+    function closeModal() {
+        document.getElementById("codeModal").style.display = "none";
+    }
+
+    function checkCode() {
+        const input = document.getElementById("exchangeCode").value.trim().toUpperCase();
+        const msgBox = document.getElementById("msgBox");
+        const vipTag = document.getElementById("vipDisplay");
+        const cardResult = document.getElementById("vipCardResult");
+
+        if (!codeList[input]) {
+            msgBox.className = "msg error";
+            msgBox.innerText = "兑换码无效，请核对后重新输入。";
+            cardResult.style.display = "none";
+            return;
+        }
+
+        const vip = codeList[input];
+
+        msgBox.className = "msg success";
+        msgBox.innerText = "激活成功！您的会员卡已生成。";
+
+        vipTag.innerText = vip.name;
+        localStorage.setItem("chengxi_vip", vip.name);
+        localStorage.setItem("chengxi_vip_type", vip.type);
+
+        cardResult.style.display = "block";
+        cardResult.innerHTML = `
+            <div class="vip-card ${vip.type}" id="vipCardImage">
+                <div class="logo">承希传媒</div>
+                <h4>MEMBERSHIP CARD</h4>
+                <div class="level">${vip.name}</div>
+                <div class="info">CHENGXI CULTURE MEDIA · MACAU</div>
+            </div>
+            <button class="btn save-card-btn" onclick="saveCard()">保存会员卡图片</button>
+        `;
+    }
+
+    // 生成并保存会员卡图片
+    function saveCard() {
+        const vipName = localStorage.getItem("chengxi_vip") || "会员";
+        const vipType = localStorage.getItem("chengxi_vip_type") || "white";
+
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+
+        const width = 600;
+        const height = 360;
+        canvas.width = width;
+        canvas.height = height;
+
+        // 背景渐变按会员类型
+        let gradient;
+        if (vipType === "silver") {
+            gradient = ctx.createLinearGradient(0, 0, width, height);
+            gradient.addColorStop(0, "#f1f1f1");
+            gradient.addColorStop(1, "#c9c9c9");
+        } else if (vipType === "gold") {
+            gradient = ctx.createLinearGradient(0, 0, width, height);
+            gradient.addColorStop(0, "#ffe9a8");
+            gradient.addColorStop(0.5, "#d4af37");
+            gradient.addColorStop(1, "#b8942e");
+        } else if (vipType === "platinum") {
+            gradient = ctx.createLinearGradient(0, 0, width, height);
+            gradient.addColorStop(0, "#ffffff");
+            gradient.addColorStop(0.5, "#f4f4f4");
+            gradient.addColorStop(1, "#eaeaea");
+        } else if (vipType === "supreme") {
+            gradient = ctx.createLinearGradient(0, 0, width, height);
+            gradient.addColorStop(0, "#fff6c2");
+            gradient.addColorStop(0.3, "#ffd24d");
+            gradient.addColorStop(0.6, "#d4af37");
+            gradient.addColorStop(1, "#b8942e");
+        } else {
+            gradient = ctx.createLinearGradient(0, 0, width, height);
+            gradient.addColorStop(0, "#ffffff");
+            gradient.addColorStop(1, "#fafafa");
+        }
+
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, width, height);
+
+        // 边框
+        ctx.strokeStyle = vipType === "supreme" ? "#b8942e" : "#cccccc";
+        ctx.lineWidth = 6;
+        ctx.strokeRect(12, 12, width - 24, height - 24);
+
+        // Logo
+        ctx.fillStyle = vipType === "gold" || vipType === "supreme" ? "#3a2a00" : "#333333";
+        ctx.font = "bold 22px sans-serif";
+        ctx.textAlign = "right";
+        ctx.fillText("CHENGXI MEDIA", width - 30, 40);
+
+        // 英文标题
+        ctx.font = "16px sans-serif";
+        ctx.fillText("MEMBERSHIP CARD", width - 30, 66);
+
+        // 会员等级
+        ctx.textAlign = "left";
+        ctx.font = "bold 48px sans-serif";
+        ctx.fillStyle = vipType === "gold" || vipType === "supreme" ? "#3a2a00" : "#111111";
+        ctx.fillText(vipName, 40, 180);
+
+        // 机构信息
+        ctx.font = "18px sans-serif";
+        ctx.fillStyle = vipType === "gold" || vipType === "supreme" ? "#5c4400" : "#555555";
+        ctx.fillText("承希文化传媒", 40, 240);
+
+        ctx.font = "14px sans-serif";
+        ctx.fillText("Macau · Since 2021", 40, 270);
+
+        // 导出图片
+        const link = document.createElement("a");
+        link.download = `承希文化传媒_${vipName}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+    }
+
+    // 页面加载时恢复会员状态
+    window.addEventListener("load", function () {
+        const savedVip = localStorage.getItem("chengxi_vip");
+        if (savedVip) {
+            document.getElementById("vipDisplay").innerText = savedVip;
+        }
+    });
+</script>
+</body>
+</html>
